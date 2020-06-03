@@ -1,24 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import React, { useEffect } from 'react';
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
+import Home from 'views/Home';
+
+const About = () => {
+  return <div>About</div>;
+};
 
 function App() {
+  const history = useHistory();
+  const location = useLocation();
+  useEffect(() => {
+    console.log(location);
+  }, [location]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/about" component={About} />
+      </Switch>
+      <button onClick={() => history.replace('/')}>home</button>
+      <button onClick={() => history.replace('/about?debug=1')}>about</button>
     </div>
   );
 }
