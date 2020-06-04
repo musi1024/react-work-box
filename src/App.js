@@ -1,11 +1,7 @@
 import './App.css';
 import React, { useEffect } from 'react';
-import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
-import Home from 'views/Home';
-
-const About = () => {
-  return <div>About</div>;
-};
+import { useHistory, useLocation } from 'react-router-dom';
+import Routes from 'routes';
 
 function App() {
   const history = useHistory();
@@ -16,10 +12,7 @@ function App() {
 
   return (
     <div className="App">
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/about" component={About} />
-      </Switch>
+      <Routes />
       <button onClick={() => history.replace('/')}>home</button>
       <button onClick={() => history.replace('/about?debug=1')}>about</button>
     </div>
