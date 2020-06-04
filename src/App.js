@@ -1,20 +1,25 @@
 import './App.css';
 import React, { useEffect } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import Routes from 'routes';
+import Routes from 'Routes';
+import Store from 'Store';
 
+const wait = fn => new Promise(resolve => setTimeout(fn, 1000));
 function App() {
-  const history = useHistory();
-  const location = useLocation();
+  const { error, setUserInfo, setIsLogin } = Store.useContainer();
   useEffect(() => {
-    console.log(location);
-  }, [location]);
+    function fetchData() {
+      wait(() => {
+        setUserInfo({ id: 1, name: 'abc' });
+        setIsLogin(true);
+      });
+    }
+    fetchData();
+  }, [setIsLogin, setUserInfo]);
 
   return (
     <div className="App">
       <Routes />
-      <button onClick={() => history.replace('/')}>home</button>
-      <button onClick={() => history.replace('/about?debug=1')}>about</button>
+      <div>{error}</div>
     </div>
   );
 }
