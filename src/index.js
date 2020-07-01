@@ -1,11 +1,12 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
-import './index.css';
+import 'styles/global.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter as Router } from 'react-router-dom';
-import StoreContainer from 'Store';
+import StoreContainer from 'store';
 import App from './App';
+
 ReactDOM.render(
   <React.StrictMode>
     <StoreContainer.Provider>
