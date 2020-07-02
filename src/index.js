@@ -13,13 +13,13 @@ checkWeChatNav();
 
 ReactDOM.render(
   <React.StrictMode>
-    <StoreContainer.Provider>
-      <Router>
-        <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <StoreContainer.Provider>
+        <Router>
           <App />
-        </ThemeProvider>
-      </Router>
-    </StoreContainer.Provider>
+        </Router>
+      </StoreContainer.Provider>
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -7,11 +7,10 @@ const Wrap = styled.div`
   top: 0;
   width: 100%;
   height: 100%;
-  color: ${p => p.theme[p.color]};
 `;
 
 const Home = () => {
-  return <Wrap color="red">Home</Wrap>;
+  return <Wrap>Home</Wrap>;
 };
 
 export default Home;
