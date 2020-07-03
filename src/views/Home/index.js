@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components/macro';
+import useSWR from 'swr';
 import api from 'api';
 import useRouter from 'hooks/useRouter';
 
@@ -13,27 +14,22 @@ const Wrap = styled.div`
 
 const Home = () => {
   const { push } = useRouter();
-  const [data, setDate] = useState([]);
-  useEffect(() => {
-    async function fetch() {
-      const [err, res] = await api.getTest();
-      if (err) return;
-      setDate(res);
-    }
-    fetch();
-  }, []);
+  const { data, mutate } = useSWR(['getTest']);
 
-  const onClick = () => {
-    api.postTest({ id: 4, name: 'xxxx' });
-  };
+  const onCLick = useCallback(async () => {
+    const newItem = { id: 4, name: 'test' };
+    await api.postTest(newItem);
+    mutate([...data, newItem]);
+  }, [data, mutate]);
+
   return (
     <Wrap>
       Home
-      {data.map((i, idx) => (
+      {data?.map((i, idx) => (
         <div key={idx}>{JSON.stringify(i, null, 2)}</div>
       ))}
-      <div onClick={onClick}>button</div>
-      <div onClick={() => push('/about')}>About</div>
+      <div onClick={onCLick}>buttom</div>
+      <div onClick={() => push('/about')}>push</div>
     </Wrap>
   );
 };

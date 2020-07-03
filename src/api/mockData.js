@@ -16,9 +16,5 @@ export default {
       }
     };
   },
-  'onGet::/test': {
-    ok: true,
-    message: 'ok',
-    result: _data
-  }
+  'onGet::/test': { ok: true, message: 'ok', result: _data }
 };

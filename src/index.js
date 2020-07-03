@@ -4,11 +4,13 @@ import 'styles/global.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter as Router } from 'react-router-dom';
-import StoreContainer from 'store';
+import { SWRConfig } from 'swr';
 import { ThemeProvider } from 'styled-components/macro';
+import StoreContainer from 'store';
 import theme from 'styles/theme';
-import App from './App';
 import checkWeChatNav from './rpf/un/checkWeChatNav';
+import api from 'api';
+import App from './App';
 checkWeChatNav();
 
 ReactDOM.render(
@@ -16,7 +18,13 @@ ReactDOM.render(
     <ThemeProvider theme={theme}>
       <StoreContainer.Provider>
         <Router>
-          <App />
+          <SWRConfig
+            value={{
+              fetcher: (key, params) => api[key](params)
+            }}
+          >
+            <App />
+          </SWRConfig>
         </Router>
       </StoreContainer.Provider>
     </ThemeProvider>

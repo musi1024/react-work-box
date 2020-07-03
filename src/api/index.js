@@ -13,21 +13,7 @@ if (query.mock) {
 }
 
 function handleApiRes(promise) {
-  return promise
-    .then(res => [null, res])
-    .catch(err => {
-      if (err.type === 'api') {
-        window.Sentry.withScope(function (scope) {
-          const { url, baseURL, method } = err.config;
-          const path = url.replace(baseURL, '');
-          scope.setFingerprint([method, path]);
-          window.Sentry.captureException(err);
-        });
-      } else {
-        window.Sentry.captureException(err);
-      }
-      return [err, null];
-    });
+  return promise.then(res => [null, res]).catch(err => [err, null]);
 }
 
 const api = {
@@ -35,41 +21,44 @@ const api = {
     return handleApiRes(ins.post('/test', { id, name }));
   },
   getTest() {
-    return handleApiRes(ins.get('/test'));
+    return ins.get('/test');
+  },
+  setToken(token) {
+    ins.defaults.headers['x-token'] = token;
   }
 };
 
 ins.interceptors.request.use(
-  function (config) {
-    return config;
-  },
-  function (error) {
-    return Promise.reject(error);
-  }
+  config => config,
+  error => Promise.reject(error)
 );
 ins.interceptors.response.use(
-  function (response) {
+  response => {
     const { data, config } = response;
     if (data && !data.ok) {
-      const { url, baseURL } = config;
-      let msg = `${config.method}:${url.replace(baseURL, '')}=>${data.message}`;
+      const { url, baseURL, method } = config;
+      const path = url.replace(baseURL, '');
+      let msg = `${method}:${path}=>${data.message}`;
       if (config.params) {
         msg += 'params:' + JSON.stringify(config.params);
       }
       if (config.data) {
         msg += 'data:' + JSON.stringify(config.data);
       }
-      const err = Error(msg);
-      err.type = 'api';
-      err.config = config;
-      return Promise.reject(err);
+      const error = Error(msg);
+      window.Sentry.withScope(scope => {
+        scope.setFingerprint([method, path]);
+        window.Sentry.captureException(error);
+      });
+      return Promise.reject(error);
     }
     return Promise.resolve(response.data.result);
   },
-  function (error) {
+  error => {
     if (error.code === 'ECONNABORTED') {
       console.log('请求超时');
     }
+    window.Sentry.captureException(error);
     return Promise.reject(error);
   }
 );
