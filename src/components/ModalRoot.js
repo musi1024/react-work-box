@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
+import ErrorModal from './ErrorModal';
 
 const store = {
   setState: () => {}
@@ -31,13 +32,13 @@ const modal = {
 
 const ModalRoot = () => {
   const [state, setState] = useState({
-    // modals
+    error: { show: false }
   });
   useEffect(() => {
     store.setState = setState;
   }, []);
 
-  return <>{/* modals */}</>;
+  return <>{state.error.show ? <ErrorModal /> : null}</>;
 };
 
 const $root = document.createElement('div');

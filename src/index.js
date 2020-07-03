@@ -4,13 +4,14 @@ import 'styles/global.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter as Router } from 'react-router-dom';
-import { SWRConfig } from 'swr';
 import { ThemeProvider } from 'styled-components/macro';
-import StoreContainer from 'store';
+import { SWRConfig } from 'swr';
 import theme from 'styles/theme';
-import checkWeChatNav from './rpf/un/checkWeChatNav';
+import StoreContainer from 'store';
 import api from 'api';
+import checkWeChatNav from './rpf/un/checkWeChatNav';
 import App from './App';
+
 checkWeChatNav();
 
 ReactDOM.render(

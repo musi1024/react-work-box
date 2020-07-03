@@ -3,6 +3,8 @@ import styled from 'styled-components/macro';
 import useSWR from 'swr';
 import api from 'api';
 import useRouter from 'hooks/useRouter';
+import RuleModal from 'components/RuleModal';
+import { useState } from 'react';
 
 const Wrap = styled.div`
   position: absolute;
@@ -22,6 +24,7 @@ const Home = () => {
     mutate([...data, newItem]);
   }, [data, mutate]);
 
+  const [openModal, setOpenModal] = useState(false);
   return (
     <Wrap>
       Home
@@ -30,6 +33,8 @@ const Home = () => {
       ))}
       <div onClick={onCLick}>buttom</div>
       <div onClick={() => push('/about')}>push</div>
+      <div onClick={() => setOpenModal(true)}>modal</div>
+      <RuleModal open={openModal} onClose={() => setOpenModal(false)} />
     </Wrap>
   );
 };
