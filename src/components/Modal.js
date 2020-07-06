@@ -28,7 +28,7 @@ const child = {
   },
   hidden: {
     opacity: 0,
-    y: '60%'
+    y: '80%'
   }
 };
 const duration = 0.2;
@@ -55,9 +55,13 @@ const Modal = props => {
   const controls = useAnimation();
   const preOpen = usePrevious(open);
   const [show, setShow] = useState();
+
   useEffect(() => {
-    if (open) controls.start('visible').then(() => setShow(true));
-    else if (preOpen) controls.start('hidden').then(() => setShow(false));
+    if (open === preOpen) return;
+    if (open) {
+      setShow(true);
+      controls.start('visible');
+    } else controls.start('hidden').then(() => setShow(false));
   }, [controls, open, preOpen]);
 
   return show ? (

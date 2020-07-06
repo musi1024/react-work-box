@@ -38,7 +38,9 @@ const ModalRoot = () => {
     store.setState = setState;
   }, []);
 
-  return <>{state.error.show ? <ErrorModal /> : null}</>;
+  return (
+    <>{<ErrorModal {...state.error} close={() => modal.close('error')} />}</>
+  );
 };
 
 const $root = document.createElement('div');
