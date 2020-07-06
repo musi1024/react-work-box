@@ -9,10 +9,13 @@ import { SWRConfig } from 'swr';
 import theme from 'styles/theme';
 import StoreContainer from 'store';
 import api from 'api';
-import checkWeChatNav from './rpf/un/checkWeChatNav';
-import App from './App';
+import checkWeChatNav from 'rpf/un/checkWeChatNav';
+import preventScroll from 'rpf/un/preventScroll';
+import 'rpf/react/vconsole';
+import App from 'App';
 
 checkWeChatNav();
+preventScroll();
 
 ReactDOM.render(
   <React.StrictMode>

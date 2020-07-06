@@ -19,7 +19,7 @@ const Home = () => {
   const { push } = useRouter();
   const { data, mutate } = useSWR(['getTest']);
 
-  const onCLick = useCallback(async () => {
+  const onClick = useCallback(async () => {
     const newItem = { id: 4, name: 'test' };
     await api.postTest(newItem);
     mutate([...data, newItem]);
@@ -32,7 +32,7 @@ const Home = () => {
       {data?.map((i, idx) => (
         <div key={idx}>{JSON.stringify(i, null, 2)}</div>
       ))}
-      <div onClick={onCLick}>buttom</div>
+      <div onClick={onClick}>buttom</div>
       <div onClick={() => push('/about')}>push</div>
       <div onClick={() => setOpenModal(true)}>modal</div>
       <div onClick={() => modal.open('error', { error: 'aaaa' })}>error</div>

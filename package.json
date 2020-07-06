@@ -45,6 +45,7 @@
   "devDependencies": {
     "axios-mock-adapter": "^1.18.1",
     "image-size": "^0.8.3",
-    "preval.macro": "^5.0.0"
+    "preval.macro": "^5.0.0",
+    "vconsole": "^3.3.4"
   }
 }
