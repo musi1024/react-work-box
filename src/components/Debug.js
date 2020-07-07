@@ -1,29 +1,21 @@
 import React from 'react';
+import ReactDom from 'react-dom';
 import styled from 'styled-components/macro';
 import vw from 'rpf/un/vw';
 import Mask from 'components/Mask';
 
 const Wrap = styled(Mask)`
   opacity: 0.4;
-  width: ${p => vw(p.width)};
-  height: ${p => vw(p.height)};
+  width: 100%;
+  height: ${vw(200)};
   bottom: 0;
   top: auto;
   color: rgba(255, 255, 255);
   pointer-events: none;
 `;
 
-Wrap.defaultProps = {
-  width: 400,
-  height: 300
-};
-
-const Debug = ({ children, width, height }) => {
-  return (
-    <Wrap className="scrollable" width={width} height={height}>
-      {children}
-    </Wrap>
-  );
+const Debug = ({ children }) => {
+  return ReactDom.createPortal(<Wrap>{children}</Wrap>, document.body);
 };
 
 export default Debug;
