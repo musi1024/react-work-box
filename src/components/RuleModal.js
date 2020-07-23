@@ -9,10 +9,10 @@ const Wrap = styled.div`
   background-color: blue;
 `;
 
-const RuleModal = ({ open, onClose }) => {
+const RuleModal = ({ children, open, onClose }) => {
   return (
     <Modal open={open}>
-      <Wrap onClick={onClose}></Wrap>
+      <Wrap onClick={onClose}>{children}</Wrap>
     </Modal>
   );
 };

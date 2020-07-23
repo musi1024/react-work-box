@@ -11,7 +11,7 @@ const Mask = styled.div`
 `;
 
 Mask.defaultProps = {
-  opacity: 0.8,
+  opacity: 0.6,
   zIndex: 99
 };
 

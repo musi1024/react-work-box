@@ -1,11 +1,9 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import styled from 'styled-components/macro';
-import useSWR from 'swr';
-import api from 'api';
-import useRouter from 'hooks/useRouter';
 import RuleModal from 'components/RuleModal';
-import modal from 'components/ModalRoot';
-import { useState } from 'react';
+import RuleModal2 from 'components/RuleModal';
+import useModalBox from 'hooks/useModalBox';
+import query from 'utils/query';
 
 const Wrap = styled.div`
   position: absolute;
@@ -15,28 +13,44 @@ const Wrap = styled.div`
   height: 100%;
 `;
 
+const wait = props => {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(props);
+    }, 500);
+  });
+};
+
 const Home = () => {
-  const { push } = useRouter();
-  const { data, mutate } = useSWR(['getTest']);
+  const { modalName, nextModal } = useModalBox([
+    {
+      name: 'rule',
+      shouldOpen: async () => {
+        const data = await wait(true);
+        return query.a && data;
+      },
+      once: true
+    },
+    {
+      name: 'rule2',
+      shouldOpen: true
+    }
+  ]);
 
-  const onClick = useCallback(async () => {
-    const newItem = { id: 4, name: 'test' };
-    await api.postTest(newItem);
-    mutate([...data, newItem]);
-  }, [data, mutate]);
-
-  const [openModal, setOpenModal] = useState(false);
   return (
     <Wrap>
-      Home
-      {data?.map((i, idx) => (
-        <div key={idx}>{JSON.stringify(i, null, 2)}</div>
-      ))}
-      <div onClick={onClick}>buttom</div>
-      <div onClick={() => push('/about')}>push</div>
-      <div onClick={() => setOpenModal(true)}>modal</div>
-      <div onClick={() => modal.open('error', { error: 'aaaa' })}>error</div>
-      <RuleModal open={openModal} onClose={() => setOpenModal(false)} />
+      <RuleModal
+        open={modalName === 'rule'}
+        onClose={() => {
+          nextModal();
+        }}
+      ></RuleModal>
+      <RuleModal2
+        open={modalName === 'rule2'}
+        onClose={() => {
+          nextModal();
+        }}
+      ></RuleModal2>
     </Wrap>
   );
 };
