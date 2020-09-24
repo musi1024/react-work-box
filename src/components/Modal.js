@@ -12,8 +12,8 @@ const ModalMask = styled(MoMask)`
   align-items: center;
   justify-content: ${p => p.align};
 `;
-const Children = styled.div``;
-const ChildrenWrap = motion.custom(Children);
+
+const ChildrenWrap = motion.custom(styled.div``);
 
 const mask = {
   visible: {
@@ -30,10 +30,11 @@ const child = {
   },
   hidden: {
     opacity: 0,
-    y: '80%'
+    y: 200
   }
 };
-const duration = 0.2;
+
+const duration = 0.26;
 
 const ModalWrap = ({ controls, children, maskOpacity, align = 'center' }) => {
   return (

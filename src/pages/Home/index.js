@@ -3,7 +3,6 @@ import styled from 'styled-components/macro';
 import RuleModal from 'components/RuleModal';
 import RuleModal2 from 'components/RuleModal';
 import useModalBox from 'hooks/useModalBox';
-import { query } from 'utils';
 
 const Wrap = styled.div`
   position: absolute;
@@ -27,7 +26,7 @@ const Home = () => {
       name: 'rule',
       shouldOpen: async () => {
         const data = await wait(true);
-        return query.a && data;
+        return data;
       },
       once: true
     },
