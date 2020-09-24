@@ -1,6 +1,6 @@
 import axios from 'axios';
 import mock from './mock';
-import query from 'utils/query';
+import { query } from 'utils';
 
 const ins = axios.create({
   baseURL: ``,
@@ -22,9 +22,6 @@ const api = {
   },
   getTest() {
     return ins.get('/test');
-  },
-  setToken(token) {
-    ins.defaults.headers['x-token'] = token;
   }
 };
 

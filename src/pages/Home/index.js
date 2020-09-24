@@ -3,7 +3,7 @@ import styled from 'styled-components/macro';
 import RuleModal from 'components/RuleModal';
 import RuleModal2 from 'components/RuleModal';
 import useModalBox from 'hooks/useModalBox';
-import query from 'utils/query';
+import { query } from 'utils';
 
 const Wrap = styled.div`
   position: absolute;

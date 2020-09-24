@@ -1,6 +1,8 @@
 import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 import styled from 'styled-components/macro';
-import Routes from 'routes';
+import Home from 'pages/Home';
+import About from 'pages/About';
 
 const Wrap = styled.div`
   position: relative;
@@ -13,7 +15,10 @@ const Wrap = styled.div`
 function App() {
   return (
     <Wrap className="App">
-      <Routes />
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/about" component={About} />
+      </Switch>
     </Wrap>
   );
 }

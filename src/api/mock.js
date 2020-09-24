@@ -3,7 +3,7 @@ import mockData from './mockData';
 
 function mock(ax) {
   const mo = new MockAdapter(ax, {
-    delayResponse: 2000
+    delayResponse: 500
   });
 
   Object.keys(mockData)

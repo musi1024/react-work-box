@@ -12,6 +12,8 @@ const ModalMask = styled(MoMask)`
   align-items: center;
   justify-content: ${p => p.align};
 `;
+const Children = styled.div``;
+const ChildrenWrap = motion.custom(Children);
 
 const mask = {
   visible: {
@@ -43,9 +45,13 @@ const ModalWrap = ({ controls, children, maskOpacity, align = 'center' }) => {
       opacity={maskOpacity}
       align={align}
     >
-      <motion.div animate={controls} variants={child} transition={{ duration }}>
+      <ChildrenWrap
+        animate={controls}
+        variants={child}
+        transition={{ duration }}
+      >
         {children}
-      </motion.div>
+      </ChildrenWrap>
     </ModalMask>
   );
 };
@@ -55,13 +61,14 @@ const Modal = props => {
   const controls = useAnimation();
   const preOpen = usePrevious(open);
   const [show, setShow] = useState();
-
   useEffect(() => {
-    if (open === preOpen) return;
+    if (Boolean(open) === Boolean(preOpen)) return;
     if (open) {
       setShow(true);
       controls.start('visible');
-    } else controls.start('hidden').then(() => setShow(false));
+    } else {
+      controls.start('hidden').then(() => setShow(false));
+    }
   }, [controls, open, preOpen]);
 
   return show ? (
