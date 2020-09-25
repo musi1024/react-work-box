@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import vw from 'rpf/un/vw';
-import Modal from './Modal';
+import Modal from 'components/Modal';
 
 const Wrap = styled.div`
   width: ${vw(300)};

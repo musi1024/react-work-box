@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import RuleModal from 'components/RuleModal';
-import RuleModal2 from 'components/RuleModal';
+import RuleModal from './RuleModal';
+import RuleModal2 from './RuleModal';
 import useModalBox from 'hooks/useModalBox';
 
 const Wrap = styled.div`
