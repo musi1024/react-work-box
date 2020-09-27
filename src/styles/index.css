@@ -28,13 +28,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
-.App {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-}
-
-input,
-textarea {
-  -webkit-user-select: auto !important;
-}

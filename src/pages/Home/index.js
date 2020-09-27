@@ -1,9 +1,5 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-// import RuleModal from './RuleModal';
-// import RuleModal2 from './RuleModal';
-// import useModalBox from 'hooks/useModalBox';
-import Loader from 'components/Loader';
 
 const Wrap = styled.div`
   position: absolute;
@@ -13,47 +9,8 @@ const Wrap = styled.div`
   height: 100%;
 `;
 
-// const wait = props => {
-//   return new Promise(resolve => {
-//     setTimeout(() => {
-//       resolve(props);
-//     }, 500);
-//   });
-// };
-
 const Home = () => {
-  // const { modalName, nextModal } = useModalBox([
-  //   {
-  //     name: 'rule',
-  //     shouldOpen: async () => {
-  //       const data = await wait(true);
-  //       return data;
-  //     },
-  //     once: true
-  //   },
-  //   {
-  //     name: 'rule2',
-  //     shouldOpen: true
-  //   }
-  // ]);
-
-  return (
-    <Wrap>
-      {/* <RuleModal
-        open={modalName === 'rule'}
-        onClose={() => {
-          nextModal();
-        }}
-      ></RuleModal>
-      <RuleModal2
-        open={modalName === 'rule2'}
-        onClose={() => {
-          nextModal();
-        }}
-      ></RuleModal2> */}
-      <Loader size={48} />
-    </Wrap>
-  );
+  return <Wrap></Wrap>;
 };
 
 export default Home;

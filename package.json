@@ -9,6 +9,7 @@
     "axios": "^0.19.2",
     "core-js": "^3.6.5",
     "framer-motion": "^2.7.1",
+    "js-cookie": "^2.2.1",
     "proxy-polyfill": "^0.3.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
