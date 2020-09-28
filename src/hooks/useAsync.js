@@ -1,53 +1,32 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
-const useRefMounted = () => {
-  const refMounted = useRef(false);
+const useAsync = (asyncFunction, immediate = true) => {
+  const [status, setStatus] = useState('idle');
+  const [value, setValue] = useState(null);
+  const [error, setError] = useState(null);
+  const execute = useCallback(() => {
+    setStatus('pending');
+    setValue(null);
+    setError(null);
 
-  useEffect(() => {
-    refMounted.current = true;
-
-    return () => {
-      refMounted.current = false;
-    };
-  });
-
-  return refMounted;
-};
-
-export const useAsyncFn = (fn, deps = []) => {
-  const [state, setState] = useState({
-    loading: false
-  });
-
-  const mounted = useRefMounted();
-
-  const callback = useCallback(() => {
-    setState({ loading: true });
-
-    fn().then(
-      value => {
-        if (mounted.current) {
-          setState({ value, loading: false });
-        }
-      },
-      error => {
-        if (mounted.current) {
-          setState({ error, loading: false });
-        }
-      }
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, deps);
-
-  return [state, callback];
-};
-
-export const useAsync = (fn, deps) => {
-  const [state, callback] = useAsyncFn(fn, deps);
+    return asyncFunction()
+      .then(response => {
+        setValue(response);
+        setStatus('success');
+      })
+      .catch(error => {
+        setError(error);
+        setStatus('error');
+      });
+  }, [asyncFunction]);
 
   useEffect(() => {
-    callback();
-  }, [callback]);
+    if (immediate) {
+      execute();
+    }
+  }, [execute, immediate]);
 
-  return state;
+  return { execute, status, value, error };
 };
+
+export default useAsync;
