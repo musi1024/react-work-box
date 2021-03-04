@@ -1,12 +1,14 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components/macro';
-import { getHeightPercent } from 'utils';
+
+const HPW = window.innerHeight / window.innerWidth;
+export const getHeightPercent = (tagHPW = 1206 / 750) => {
+  const percent = HPW / tagHPW;
+  return Math.max(1, percent);
+};
 
 const Wrap = styled.div`
-  transform: scale(
-    ${p => (p.scaleX > 1 ? 1 : p.scaleX)},
-    ${p => (p.scaleY > 1 ? 1 : p.scaleY)}
-  );
+  transform: scale(${p => p.scaleX} ${p => p.scaleY});
 `;
 
 function ScaleArea(props) {

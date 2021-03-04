@@ -1,87 +1,95 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import { motion, useAnimation } from 'framer-motion';
-import styled from 'styled-components/macro';
-import usePrevious from 'rpf/react/hooks/usePrevious';
 import Mask from './Mask';
+import styled, { css, createGlobalStyle } from 'styled-components/macro';
+import { CSSTransition } from 'react-transition-group';
 
-const MoMask = motion.custom(Mask);
-const ModalMask = styled(MoMask)`
+const duration = 300;
+const TransStyle = createGlobalStyle`
+  .modal-enter {
+    opacity: 0;
+    > .modal_wrap {
+      transform: translate3d(0, 100%, 0);
+    }
+  }
+  .modal-enter-active {
+    opacity: 1;
+    transition: all ${duration}ms;
+    > .modal_wrap {
+      transform: translate3d(0, 0, 0);
+      transition: all ${duration}ms;
+    }
+  }
+  .modal-exit {
+    opacity: 1;
+    > .modal_wrap {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+  .modal-exit-active {
+    opacity: 0;
+    transition: all ${duration}ms;
+    > .modal_wrap {
+      transform: translate3d(0, 100%, 0);
+      transition: all ${duration}ms;
+    }
+  }
+`;
+
+const vertAlign = p => {
+  if (p.align === 'center') {
+    return css`
+      justify-content: center;
+    `;
+  } else if (p.align === 'top') {
+    return css`
+      justify-content: flex-start;
+    `;
+  } else if (p.align === 'bottom') {
+    return css`
+      justify-content: flex-end;
+    `;
+  }
+};
+
+const ModalMask = styled(Mask)`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: ${p => p.align};
+  ${p => vertAlign(p)}
 `;
 
-const ChildrenWrap = motion.custom(styled.div``);
+const ModalWrap = styled.div`
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+  text-align: center;
+`;
 
-const mask = {
-  visible: {
-    opacity: 1
-  },
-  hidden: {
-    opacity: 0
-  }
-};
-const child = {
-  visible: {
-    opacity: 1,
-    y: 0
-  },
-  hidden: {
-    opacity: 0,
-    y: 200
-  }
-};
+const Modal = props => {
+  let { open, onOpen, im = false } = props;
 
-const duration = 0.26;
-
-const ModalWrap = ({ controls, children, maskOpacity, align = 'center' }) => {
-  return (
-    <ModalMask
-      initial="hidden"
-      animate="visible"
-      variants={mask}
-      transition={{ duration }}
-      opacity={maskOpacity}
-      align={align}
-    >
-      <ChildrenWrap
-        animate={controls}
-        variants={child}
-        transition={{ duration }}
+  return ReactDOM.createPortal(
+    <>
+      <TransStyle />
+      <CSSTransition
+        onEntered={() => onOpen && onOpen()}
+        in={Boolean(open)}
+        timeout={duration}
+        classNames={im ? 'null' : 'modal'}
+        unmountOnExit
       >
-        {children}
-      </ChildrenWrap>
-    </ModalMask>
+        <ModalMask opacity={props.maskOpacity} align={props.align}>
+          <ModalWrap className="modal_wrap">{props.children}</ModalWrap>
+        </ModalMask>
+      </CSSTransition>
+    </>,
+    document.body
   );
 };
 
-const Modal = props => {
-  const { open, portal = true } = props;
-  const controls = useAnimation();
-  const preOpen = usePrevious(open);
-  const [show, setShow] = useState();
-  useEffect(() => {
-    if (Boolean(open) === Boolean(preOpen)) return;
-    if (open) {
-      setShow(true);
-      controls.start('visible');
-    } else {
-      controls.start('hidden').then(() => setShow(false));
-    }
-  }, [controls, open, preOpen]);
-
-  return show ? (
-    portal ? (
-      ReactDOM.createPortal(
-        <ModalWrap {...props} controls={controls} />,
-        document.body
-      )
-    ) : (
-      <ModalWrap {...props} controls={controls} />
-    )
-  ) : null;
+Modal.defaultProps = {
+  align: 'center'
 };
 
 export default Modal;

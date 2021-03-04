@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import ErrorModal from './ErrorModal';
+import Toast from './Toast';
 
 const store = {
   setState: () => {}
@@ -32,14 +33,18 @@ const modal = {
 
 const ModalRoot = () => {
   const [state, setState] = useState({
-    error: { show: false }
+    error: { show: false },
+    toast: { show: false }
   });
   useEffect(() => {
     store.setState = setState;
   }, []);
 
   return (
-    <>{<ErrorModal {...state.error} close={() => modal.close('error')} />}</>
+    <>
+      <ErrorModal {...state.error} close={() => modal.close('error')} />
+      <Toast {...state.toast} />
+    </>
   );
 };
 

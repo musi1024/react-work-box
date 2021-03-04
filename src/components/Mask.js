@@ -7,12 +7,12 @@ const Mask = styled.div`
   width: 100%;
   height: 100%;
   background-color: ${p => `rgba(0, 0, 0, ${p.opacity})`};
-  z-index: ${p => p.zIndex};
+  z-index: ${p => p.zindex};
 `;
 
 Mask.defaultProps = {
-  opacity: 0.6,
-  zIndex: 99
+  opacity: 0.8,
+  zindex: 9
 };
 
 export default Mask;
