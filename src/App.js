@@ -1,6 +1,7 @@
 import React from 'react';
 import PageWrap from 'components/PageWrap';
 import modal from 'components/ModalRoot';
+import Test from 'components/Test';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       >
         按钮
       </button>
+      <Test />
     </PageWrap>
   );
 }
