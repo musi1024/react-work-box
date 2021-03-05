@@ -1,42 +1,48 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import filterQuery from 'rpf/un/filterQuery';
 import Item from './Item';
 import { Content, CloseBtn, Enter, ScrollWrap } from './Styles';
 
-const testConfigs = [
-  {
-    type: 'input',
-    title: '跳转到别的账号',
-    tips: '输入openid，如：xxx'
-  }
-];
+const Test = ({ states = {}, configs }) => {
+  const [open, setOpen] = useState(false);
 
-const Test = () => {
-  const [open, setOpen] = useState(true);
-
-  const handleReload = query => {
+  const handleReload = useCallback(query => {
     window.localStorage.clear();
     window.sessionStorage.clear();
     window.location.replace(
       filterQuery(window.location.href, [], query || {}, '')
     );
-  };
+  }, []);
+
+  const statesRef = useRef();
+  useEffect(() => {
+    statesRef.current = states;
+  });
+  const handleFn = useCallback(
+    (config, value) => {
+      config?.fn({ value, states: statesRef.current, reloadFn: handleReload });
+    },
+    [handleReload]
+  );
 
   return open ? (
     <Content>
       <CloseBtn onClick={() => setOpen(false)}>x</CloseBtn>
-      <div>openid: </div>
-      <div>userId: </div>
+      {Object.keys(states).map((key, index) => (
+        <div key={index}>
+          {key}: {states[key]}
+        </div>
+      ))}
       <ScrollWrap>
-        {testConfigs.map((item, index) => (
+        {configs.map((item, index) => (
           <Item
             key={index}
-            type={item.type}
-            title={item.title}
-            tips={item.tips}
-            fn={() => {
-              item.fn();
-            }}
+            type={item?.type}
+            multiple={item?.multiple}
+            title={item?.title}
+            tips={item?.tips}
+            radios={item?.radios}
+            fn={value => handleFn(item, value)}
           />
         ))}
       </ScrollWrap>

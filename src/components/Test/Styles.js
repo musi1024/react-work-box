@@ -90,6 +90,8 @@ export const RadioWrap = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: ${vw(10)};
+  font-size: ${vw(22)};
+  line-height: 1.2;
 `;
 
 export const Radio = styled.input.attrs({ type: 'radio' })`
@@ -98,15 +100,27 @@ export const Radio = styled.input.attrs({ type: 'radio' })`
 
 export const Title = styled.div`
   margin-bottom: ${vw(8)};
+  font-size: ${vw(30)};
   font-weight: bold;
 `;
 
 export const SmTitle = styled.div`
   margin: ${vw(6)};
-  font-size: ${vw(22)};
+  font-size: ${vw(24)};
+  font-weight: bold;
 `;
 
 export const Tips = styled.div`
   margin-top: ${vw(8)};
   font-size: ${vw(22)};
+`;
+
+export const MultipleItemWrap = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: ${vw(10)};
+  line-height: 1.2;
 `;
