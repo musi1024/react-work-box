@@ -61,9 +61,6 @@ const ModalMask = styled(Mask)`
 
 const ModalWrap = styled.div`
   position: relative;
-  width: fit-content;
-  height: fit-content;
-  text-align: center;
 `;
 
 const Modal = props => {

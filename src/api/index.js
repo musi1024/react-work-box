@@ -1,18 +1,12 @@
 import axios from 'axios';
-// import Cookies from 'js-cookie';
 import mock from './mock';
 import { query } from 'utils';
 import ErrorModal from 'components/ErrorModal';
 
-// const TOKEN_KEY = '';
-// const token = Cookies.get(TOKEN_KEY);
-
 const BASE_URL = '';
 const ins = axios.create({
   baseURL: BASE_URL,
-  // withCredentials: true,
   timeout: 10 * 1000
-  // headers: { Authorization: token }
 });
 
 if (query.mock) {

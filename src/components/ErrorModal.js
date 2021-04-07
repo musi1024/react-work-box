@@ -12,7 +12,7 @@ const Wrap = styled.div`
 const ErrorModal = props => {
   return (
     <Modal open={props.show} portal={false}>
-      <Wrap onClick={props.close}>{props.error}</Wrap>
+      <Wrap onClick={props.onClose}>{props.error}</Wrap>
     </Modal>
   );
 };

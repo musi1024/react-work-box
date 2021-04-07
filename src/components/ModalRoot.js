@@ -42,7 +42,7 @@ const ModalRoot = () => {
 
   return (
     <>
-      <ErrorModal {...state.error} close={() => modal.close('error')} />
+      <ErrorModal {...state.error} onClose={() => modal.close('error')} />
       <Toast {...state.toast} />
     </>
   );

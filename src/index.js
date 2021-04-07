@@ -21,14 +21,12 @@ checkWeChatNav();
 preventScroll();
 
 ReactDOM.render(
-  <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <Store.Provider>
-        <Router history={history}>
-          <App />
-        </Router>
-      </Store.Provider>
-    </ThemeProvider>
-  </React.StrictMode>,
+  <ThemeProvider theme={theme}>
+    <Store.Provider>
+      <Router history={history}>
+        <App />
+      </Router>
+    </Store.Provider>
+  </ThemeProvider>,
   document.getElementById('root')
 );
