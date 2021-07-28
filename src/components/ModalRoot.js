@@ -13,7 +13,7 @@ const modal = {
       return {
         ...s,
         [key]: {
-          show: true,
+          open: true,
           ...props
         }
       };
@@ -24,7 +24,7 @@ const modal = {
       return {
         ...s,
         [key]: {
-          show: false
+          open: false
         }
       };
     });
@@ -33,8 +33,10 @@ const modal = {
 
 const ModalRoot = () => {
   const [state, setState] = useState({
-    error: { show: false },
-    toast: { show: false }
+    // 这里增加的弹窗的状态，弹窗类型
+    // 弹窗类型作为 key，value 默认的参数
+    error: { open: false },
+    toast: { open: false }
   });
   useEffect(() => {
     store.setState = setState;
@@ -42,8 +44,11 @@ const ModalRoot = () => {
 
   return (
     <>
-      <ErrorModal {...state.error} onClose={() => modal.close('error')} />
-      <Toast {...state.toast} />
+      {/*
+        这里引入所有的全局弹窗组件
+       */}
+      <ErrorModal {...state.error} />
+      <Toast {...state.toast} onClose={() => modal.close('toast')} />
     </>
   );
 };
